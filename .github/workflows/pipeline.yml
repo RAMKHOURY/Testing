@@ -32,7 +32,7 @@ jobs:
           Write-Output $content.'name'
           $name = $content.'name' 
           $content | ConvertTo-Json -depth 32| set-content $jsonFile
-          echo ::set-env name=PROJECT_NAME::$name
+          Write-Output "::set-env name=PROJECT_NAME:: $content.'name'"
           
       - name: Upload math result for job 1
         uses: actions/upload-artifact@v2
