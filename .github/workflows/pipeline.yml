@@ -21,21 +21,18 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-        env:
-          FIRST_NAME: Mona
 
       # Runs a single command using the runners shell
       - name: Run a one-line script
         run: |
           Compress-Archive -Path dist/ -DestinationPath dist.zip
-          Write-Output $FIRST_NAME
+          Write-Output 'Hello World'
           $jsonFile = "package.json"
           $content = Get-Content $jsonFile -raw | ConvertFrom-Json
           Write-Output $content.'name'
           $content.'name' = "New App Name"
           $content | ConvertTo-Json -depth 32| set-content $jsonFile
-          echo '::set-env name=PROJECT_NAME::$content.name'
-
+          echo ::set-env name=PROJECT_NAME::$content.'name'
       - name: Upload math result for job 1
         uses: actions/upload-artifact@v2
         with:
@@ -45,8 +42,23 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
         run: |
-          Write-Output $PROJECT_NAME
+          Write-Output THE NEW NAME IS $PROJECT_NAME
           $jsonFile = "package.json"
           $content = Get-Content $jsonFile -raw | ConvertFrom-Json
-          Write-Output $content.name
+          Write-Output $content.'name'
           
+  lunix:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+      
+      - name: set environment variables
+        uses: allenevans/set-env@v1.0.0
+        with:
+          MY_ENV_VAR: 'my value'
+
+      - name: Printenv
+        run: |
+          echo "MY_ENV_VAR=${MY_ENV_VAR}"
+          printenv
