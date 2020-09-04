@@ -32,7 +32,8 @@ jobs:
           Write-Output $content.'name'
           $content.'name' = "New App Name"
           $content | ConvertTo-Json -depth 32| set-content $jsonFile
-          echo ::set-env name=PROJECT_NAME::$content.'name'
+          Write-Output "::set-env name=PROJECT_NAME::$content.'name'"
+          
       - name: Upload math result for job 1
         uses: actions/upload-artifact@v2
         with:
@@ -50,7 +51,7 @@ jobs:
       - name: Set selected color
         run: echo '::set-env name=SELECTED_COLOR::green'
       - name: Get color
-        run: echo 'The selected color is' $SELECTED_COLOR 
+        run: echo 'The selected color is' $env:SELECTED_COLOR 
           
   lunix:
     runs-on: ubuntu-latest
