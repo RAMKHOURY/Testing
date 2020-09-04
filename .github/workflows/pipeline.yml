@@ -47,6 +47,11 @@ jobs:
           $content = Get-Content $jsonFile -raw | ConvertFrom-Json
           Write-Output $content.'name'
           
+      - name: Set selected color
+        run: echo '::set-env name=SELECTED_COLOR::green'
+      - name: Get color
+        run: echo 'The selected color is' $SELECTED_COLOR 
+          
   lunix:
     runs-on: ubuntu-latest
 
@@ -60,5 +65,11 @@ jobs:
 
       - name: Printenv
         run: |
+          echo ::set-env name=PROJECT_NAME::NewVVVVV
           echo "MY_ENV_VAR=${MY_ENV_VAR}"
-          printenv
+          
+      - name: Set selected color
+        run: echo '::set-env name=SELECTED_COLOR::green'
+      - name: Get color
+        run: echo 'The selected color is' $SELECTED_COLOR 
+          
