@@ -30,9 +30,9 @@ jobs:
           $jsonFile = "package.json"
           $content = Get-Content $jsonFile -raw | ConvertFrom-Json
           Write-Output $content.'name'
-          $content.'name' = "New App Name"
+          $name = $content.'name' 
           $content | ConvertTo-Json -depth 32| set-content $jsonFile
-          echo '::set-env name=PROJECT_NAME::XXXXXXX'
+          echo '::set-env name=PROJECT_NAME::$name'
           
       - name: Upload math result for job 1
         uses: actions/upload-artifact@v2
